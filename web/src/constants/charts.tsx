@@ -199,3 +199,83 @@ export const LatencyChartSample = {
     },
   ],
 };
+
+export const UserFeedbackChartSample = {
+  title: {
+    text: "User Feedback",
+    left: "center",
+  },
+  tooltip: {
+    trigger: "item",
+  },
+  toolbox: {
+    feature: {
+      saveAsImage: {},
+    },
+  },
+  legend: {
+    orient: "vertical",
+    left: "left",
+  },
+  series: [
+    {
+      name: "Access From",
+      type: "pie",
+      radius: ["40%", "70%"],
+      data: [
+        { value: 1048, name: "Like" },
+        { value: 735, name: "Dislike" },
+        { value: 580, name: "Neutral" },
+        { value: 484, name: "Very Like" },
+        { value: 300, name: "Very Dislike" },
+      ],
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: "rgba(0, 0, 0, 0.5)",
+        },
+      },
+    },
+  ],
+};
+
+export const UserSentimentChartSample = {
+  title: {
+    text: "User Sentiment",
+    left: "center",
+  },
+  tooltip: {
+    trigger: "item",
+  },
+  legend: {
+    orient: "vertical",
+    left: "left",
+  },
+  toolbox: {
+    feature: {
+      saveAsImage: {},
+    },
+  },
+  series: [
+    {
+      name: "Access From",
+      type: "pie",
+      radius: ["40%", "70%"],
+      data: [
+        { value: 1048, name: "happy" },
+        { value: 735, name: "Positive" },
+        { value: 580, name: "Neutral" },
+        { value: 484, name: "Anger" },
+        { value: 300, name: "Sad" },
+      ],
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: "rgba(0, 0, 0, 0.5)",
+        },
+      },
+    },
+  ],
+};
