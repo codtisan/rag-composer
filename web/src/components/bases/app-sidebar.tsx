@@ -4,6 +4,7 @@ import {
   ArrowBigRight,
   BookOpenText,
   ChartLine,
+  DatabaseBackup,
   KeyRound,
   LayoutDashboard,
   Settings,
@@ -16,6 +17,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import useSelectedMenuItemStore from "@/store/use-select-menu-item-store";
 
 type MenuItem = {
   title: string;
@@ -48,6 +50,11 @@ const FirstPageMenuItemList: MenuItem[] = [
 
 const SecondPageMenuItemList: MenuItem[] = [
   {
+    title: "Backup and restore",
+    icon: <DatabaseBackup />,
+    link: "/backup",
+  },
+  {
     title: "Setting",
     icon: <Settings />,
     link: "/setting",
@@ -56,6 +63,7 @@ const SecondPageMenuItemList: MenuItem[] = [
 
 const AppSideBar = () => {
   const [isNext, setIsNext] = useState<boolean>(false);
+  const { selectedMenuItem, setSelectedMenuItem } = useSelectedMenuItemStore();
   return (
     <div className="h-full w-[3.5%] shadow-sm border-r-1 flex flex-col items-center justify-between">
       <div className="mt-4 flex flex-col gap-2 items-center">
@@ -66,7 +74,17 @@ const AppSideBar = () => {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Link href={item.link}>
-                        <Button variant="ghost">{item.icon}</Button>
+                        <Button
+                          variant="ghost"
+                          className={
+                            selectedMenuItem === item.title
+                              ? "bg-sky-200"
+                              : "hover:bg-sky-200"
+                          }
+                          onClick={() => setSelectedMenuItem(item.title)}
+                        >
+                          {item.icon}
+                        </Button>
                       </Link>
                     </TooltipTrigger>
                     <TooltipContent side="right">
@@ -82,7 +100,17 @@ const AppSideBar = () => {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Link href={item.link}>
-                        <Button variant="ghost">{item.icon}</Button>
+                        <Button
+                          variant="ghost"
+                          className={
+                            selectedMenuItem === item.title
+                              ? "bg-sky-200"
+                              : "hover:bg-sky-200"
+                          }
+                          onClick={() => setSelectedMenuItem(item.title)}
+                        >
+                          {item.icon}
+                        </Button>
                       </Link>
                     </TooltipTrigger>
                     <TooltipContent side="right">
