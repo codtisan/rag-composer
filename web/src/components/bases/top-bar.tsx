@@ -6,7 +6,7 @@ import Logo from "@/assets/deep-learning.png";
 
 const TopBar = () => {
   return (
-    <div className="w-full h-[5%] flex items-center justify-between shadow-sm">
+    <div className="size-full flex items-center justify-between shadow-sm border-b-1">
       <div className="h-full ml-2 flex items-center gap-2">
         <Image width={30} height={30} src={Logo} alt="logo" />
         <div className="text-2xl">

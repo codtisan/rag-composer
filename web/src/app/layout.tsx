@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import TopBar from "@/components/bases/top-bar";
+import AppSideBar from "@/components/bases/app-sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,8 +33,13 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class">
           <div className="w-[100vw] h-[100vh]">
-            <TopBar />
-            {children}
+            <div className="w-full h-[5%]">
+              <TopBar />
+            </div>
+            <div className="w-full h-[95%] flex flex-row">
+              <AppSideBar />
+              {children}
+            </div>
           </div>
         </ThemeProvider>
       </body>
