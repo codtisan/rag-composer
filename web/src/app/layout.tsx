@@ -17,6 +17,14 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "RAGComposer",
+  icons: {
+    icon: [
+      {
+        url: "/logo.png",
+        type: "image/png",
+      },
+    ],
+  },
   description:
     "RAGComposer: A Mutli-Agent and Multimodal RAG Orchestration Platform",
 };

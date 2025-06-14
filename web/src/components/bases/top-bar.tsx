@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { ColourfulText } from "../ui/colourful-text";
 import ThemeSwitch from "./theme-switch";
-import Logo from "@/assets/deep-learning.png";
+import Logo from "@/app/logo.png";
 
 const TopBar = () => {
   return (
