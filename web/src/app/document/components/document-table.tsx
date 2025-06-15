@@ -61,6 +61,7 @@ import txtLogo from "@/assets/txt-file.png";
 import pptxLogo from "@/assets/pptx-file.png";
 import mdLogo from "@/assets/md-file.png";
 import Image, { StaticImageData } from "next/image";
+import CircularProgress from "@/components/bases/circular-progress";
 
 export const columns: ColumnDef<DocumentModel>[] = [
   {
@@ -110,6 +111,32 @@ export const columns: ColumnDef<DocumentModel>[] = [
           )}
         >
           {row.getValue("status")}
+        </div>
+      );
+    },
+  },
+  {
+    header: "Progress",
+    cell: ({ row }) => {
+      let progress = 0;
+      if (row.getValue("status") === "Uploading") {
+        progress = 20;
+      }
+      if (row.getValue("status") === "Uploaded") {
+        progress = 40;
+      }
+      if (row.getValue("status") === "Processing") {
+        progress = 60;
+      }
+      if (row.getValue("status") === "Processed") {
+        progress = 80;
+      }
+      if (row.getValue("status") === "Ready") {
+        progress = 100;
+      }
+      return (
+        <div>
+          <CircularProgress percentage={progress} />
         </div>
       );
     },
