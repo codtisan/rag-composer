@@ -60,6 +60,8 @@ import docxLogo from "@/assets/docx-file.png";
 import txtLogo from "@/assets/txt-file.png";
 import pptxLogo from "@/assets/pptx-file.png";
 import mdLogo from "@/assets/md-file.png";
+import jpgLogo from "@/assets/jpg-file.png";
+import pngLogo from "@/assets/png-file.png";
 import Image, { StaticImageData } from "next/image";
 import CircularProgress from "@/components/bases/circular-progress";
 
@@ -185,6 +187,12 @@ export const columns: ColumnDef<DocumentModel>[] = [
       }
       if (row.getValue("type") === "pptx") {
         imageLogo = pptxLogo;
+      }
+      if (row.getValue("type") === "jpg") {
+        imageLogo = jpgLogo;
+      }
+      if (row.getValue("type") === "png") {
+        imageLogo = pngLogo;
       }
       return (
         <div className="flex justify-center">
