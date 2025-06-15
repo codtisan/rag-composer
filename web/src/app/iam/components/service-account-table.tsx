@@ -19,6 +19,7 @@ import {
   Eye,
   MoreHorizontal,
   Pencil,
+  RefreshCw,
   Trash,
 } from "lucide-react";
 
@@ -28,6 +29,7 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -40,7 +42,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { knowledgeBaseDataSample } from "@/constants/knowledge-base";
 import { statusToColor } from "@/utils/color";
 import { cn } from "@/lib/utils";
 import {
@@ -53,10 +54,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { KnowledgeBaseModel } from "@/models/knowledge-base-model";
+import { serviceAccountSamples } from "@/constants/service-account";
+import { ServiceAccountModel } from "@/models/service-account-model";
 
-export const columns: ColumnDef<KnowledgeBaseModel>[] = [
+export const columns: ColumnDef<ServiceAccountModel>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -97,36 +98,56 @@ export const columns: ColumnDef<KnowledgeBaseModel>[] = [
     },
   },
   {
-    accessorKey: "name",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "description",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Description
+          Email
           <ArrowUpDown />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("description")}</div>
+      <div className="capitalize">{row.getValue("email")}</div>
     ),
+  },
+  {
+    accessorKey: "token",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Token
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="capitalize">
+        {(row.getValue("token") as string).slice(0, 5)}......
+        {(row.getValue("token") as string).slice(-5)}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "role",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Role
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
   },
   {
     accessorKey: "createdAt",
@@ -191,6 +212,10 @@ export const columns: ColumnDef<KnowledgeBaseModel>[] = [
               <Pencil />
               Edit
             </DropdownMenuItem>
+            <DropdownMenuItem>
+              <RefreshCw />
+              Regenerate
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -198,7 +223,7 @@ export const columns: ColumnDef<KnowledgeBaseModel>[] = [
   },
 ];
 
-export function KnowledgeBaseTable() {
+export function ServiceAccountTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -208,7 +233,7 @@ export function KnowledgeBaseTable() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
-    data: knowledgeBaseDataSample,
+    data: serviceAccountSamples,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -220,7 +245,7 @@ export function KnowledgeBaseTable() {
     onRowSelectionChange: setRowSelection,
     initialState: {
       pagination: {
-        pageSize: 9,
+        pageSize: 8,
       },
     },
     state: {
@@ -233,12 +258,12 @@ export function KnowledgeBaseTable() {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4 gap-5">
+      <div className="flex items-center pb-4 gap-5">
         <Input
-          placeholder="Filter name..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter emails..."
+          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("email")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -274,16 +299,27 @@ export function KnowledgeBaseTable() {
           </DialogTrigger>
           <DialogContent className="">
             <DialogHeader>
-              <DialogTitle>Create Knowledge base</DialogTitle>
+              <DialogTitle>Create Service Account</DialogTitle>
             </DialogHeader>
             <div className="grid gap-4">
               <div className="grid gap-3">
-                <Label htmlFor="name-1">Name</Label>
-                <Input id="name-1" name="name" />
+                <Label htmlFor="email-1">Email</Label>
+                <Input id="email-1" name="email" type="email" />
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="name-1">Description</Label>
-                <Textarea placeholder="Type your description here." />
+                <Label htmlFor="password-1">Role</Label>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-[50%]">
+                      Select a Role
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="start">
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem>Profile</DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
             <DialogFooter>

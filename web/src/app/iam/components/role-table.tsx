@@ -40,9 +40,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { knowledgeBaseDataSample } from "@/constants/knowledge-base";
-import { statusToColor } from "@/utils/color";
-import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogClose,
@@ -53,10 +50,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { KnowledgeBaseModel } from "@/models/knowledge-base-model";
+import { roleSamples } from "@/constants/role";
+import {
+  DashboardPermission,
+  IAMPermission,
+  IAMPolicies,
+  RoleModel,
+} from "@/models/role-model";
+import { statusToColor } from "@/utils/color";
+import { cn } from "@/lib/utils";
 
-export const columns: ColumnDef<KnowledgeBaseModel>[] = [
+export const columns: ColumnDef<RoleModel>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -112,21 +116,56 @@ export const columns: ColumnDef<KnowledgeBaseModel>[] = [
     cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
   },
   {
-    accessorKey: "description",
+    accessorKey: "dashboard",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Description
+          Dashboard
           <ArrowUpDown />
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("description")}</div>
-    ),
+    cell: ({ row }) => {
+      console.log(row.getValue("dashboard"));
+      return (
+        <div className="capitalize">
+          {(row.getValue("dashboard") as DashboardPermission[]).map(
+            (value: DashboardPermission) => {
+              return value + ", ";
+            },
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "knowledgeBase",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Knowledge Base
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      console.log(row.getValue("knowledgeBase"));
+      return (
+        <div className="capitalize">
+          {(row.getValue("knowledgeBase") as IAMPermission[]).map(
+            (value: IAMPermission) => {
+              return value + ", ";
+            },
+          )}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "createdAt",
@@ -198,7 +237,7 @@ export const columns: ColumnDef<KnowledgeBaseModel>[] = [
   },
 ];
 
-export function KnowledgeBaseTable() {
+export function RoleTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -208,7 +247,7 @@ export function KnowledgeBaseTable() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
-    data: knowledgeBaseDataSample,
+    data: roleSamples,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -220,7 +259,7 @@ export function KnowledgeBaseTable() {
     onRowSelectionChange: setRowSelection,
     initialState: {
       pagination: {
-        pageSize: 9,
+        pageSize: 8,
       },
     },
     state: {
@@ -233,7 +272,7 @@ export function KnowledgeBaseTable() {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4 gap-5">
+      <div className="flex items-center pb-4 gap-5">
         <Input
           placeholder="Filter name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -274,16 +313,36 @@ export function KnowledgeBaseTable() {
           </DialogTrigger>
           <DialogContent className="">
             <DialogHeader>
-              <DialogTitle>Create Knowledge base</DialogTitle>
+              <DialogTitle>Create Role</DialogTitle>
             </DialogHeader>
             <div className="grid gap-4">
               <div className="grid gap-3">
                 <Label htmlFor="name-1">Name</Label>
                 <Input id="name-1" name="name" />
               </div>
-              <div className="grid gap-3">
-                <Label htmlFor="name-1">Description</Label>
-                <Textarea placeholder="Type your description here." />
+              <div className="flex flex-col gap-6">
+                {Object.values(IAMPolicies).map((policy, index: number) => {
+                  return (
+                    <div className="grid gap-3" key={index}>
+                      <Label htmlFor="name-1">{policy.title} Policy</Label>
+                      <div className="flex flex-row gap-6">
+                        {policy.policies.map(
+                          (permission: DashboardPermission | IAMPermission) => {
+                            return (
+                              <div
+                                className="flex flex-row gap-2"
+                                key={permission}
+                              >
+                                <Checkbox id={permission} />
+                                <Label>{permission}</Label>
+                              </div>
+                            );
+                          },
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <DialogFooter>

@@ -1,4 +1,4 @@
-export type KnowledgeBaseData = {
+export type KnowledgeBaseModel = {
   id: string;
   name: string;
   status: "Active" | "Inactive";

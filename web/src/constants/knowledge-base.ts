@@ -1,6 +1,6 @@
-import { KnowledgeBaseData } from "@/types/knowledge-base";
+import { KnowledgeBaseModel } from "@/models/knowledge-base-model";
 
-export const knowledgeBaseDataSample: KnowledgeBaseData[] = [
+export const knowledgeBaseDataSample: KnowledgeBaseModel[] = [
   {
     id: "kb001",
     name: "Introduction to AI",

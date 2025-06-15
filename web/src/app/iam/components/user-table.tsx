@@ -28,6 +28,7 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -40,7 +41,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { knowledgeBaseDataSample } from "@/constants/knowledge-base";
 import { statusToColor } from "@/utils/color";
 import { cn } from "@/lib/utils";
 import {
@@ -53,10 +53,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { KnowledgeBaseModel } from "@/models/knowledge-base-model";
+import { userDataSample } from "@/constants/user";
+import { UserModel } from "@/models/user-model";
 
-export const columns: ColumnDef<KnowledgeBaseModel>[] = [
+export const columns: ColumnDef<UserModel>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -97,6 +97,23 @@ export const columns: ColumnDef<KnowledgeBaseModel>[] = [
     },
   },
   {
+    accessorKey: "email",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Email
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("email")}</div>
+    ),
+  },
+  {
     accessorKey: "name",
     header: ({ column }) => {
       return (
@@ -112,21 +129,19 @@ export const columns: ColumnDef<KnowledgeBaseModel>[] = [
     cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
   },
   {
-    accessorKey: "description",
+    accessorKey: "role",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Description
+          Role
           <ArrowUpDown />
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("description")}</div>
-    ),
+    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
   },
   {
     accessorKey: "createdAt",
@@ -198,7 +213,7 @@ export const columns: ColumnDef<KnowledgeBaseModel>[] = [
   },
 ];
 
-export function KnowledgeBaseTable() {
+export function UserTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -208,7 +223,7 @@ export function KnowledgeBaseTable() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
-    data: knowledgeBaseDataSample,
+    data: userDataSample,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -220,7 +235,7 @@ export function KnowledgeBaseTable() {
     onRowSelectionChange: setRowSelection,
     initialState: {
       pagination: {
-        pageSize: 9,
+        pageSize: 8,
       },
     },
     state: {
@@ -233,7 +248,7 @@ export function KnowledgeBaseTable() {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4 gap-5">
+      <div className="flex items-center pb-4 gap-5">
         <Input
           placeholder="Filter name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -274,16 +289,35 @@ export function KnowledgeBaseTable() {
           </DialogTrigger>
           <DialogContent className="">
             <DialogHeader>
-              <DialogTitle>Create Knowledge base</DialogTitle>
+              <DialogTitle>Create User</DialogTitle>
             </DialogHeader>
             <div className="grid gap-4">
+              <div className="grid gap-3">
+                <Label htmlFor="email-1">Email</Label>
+                <Input id="email-1" name="email" type="email" />
+              </div>
               <div className="grid gap-3">
                 <Label htmlFor="name-1">Name</Label>
                 <Input id="name-1" name="name" />
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="name-1">Description</Label>
-                <Textarea placeholder="Type your description here." />
+                <Label htmlFor="password-1">Password</Label>
+                <Input id="password-1" name="password" type="password" />
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="password-1">Role</Label>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-[50%]">
+                      Select a Role
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="start">
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem>Profile</DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
             <DialogFooter>
