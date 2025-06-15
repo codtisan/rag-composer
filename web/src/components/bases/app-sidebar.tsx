@@ -5,10 +5,12 @@ import {
   BookOpenText,
   ChartLine,
   DatabaseBackup,
+  File,
   Joystick,
   KeyRound,
   LayoutDashboard,
   Settings,
+  Users,
 } from "lucide-react";
 import { ReactNode, useState } from "react";
 import {
@@ -43,13 +45,23 @@ const FirstPageMenuItemList: MenuItem[] = [
     link: "/knowledgebase",
   },
   {
+    title: "Document Manager",
+    icon: <File />,
+    link: "/document",
+  },
+  {
     title: "Playground",
     icon: <Joystick />,
     link: "/playground",
   },
   {
-    title: "Identity and Access Management",
+    title: "API Key Manager",
     icon: <KeyRound />,
+    link: "/apikey",
+  },
+  {
+    title: "Identity and Access Management",
+    icon: <Users />,
     link: "/iam",
   },
 ];

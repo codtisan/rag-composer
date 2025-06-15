@@ -18,6 +18,11 @@ export default function ChatroomMessageList() {
           Hi, I am doing well, thank you for asking. How can I help you today?
         </ChatBubbleMessage>
       </ChatBubble>
+      <ChatBubble variant="sent">
+        <ChatBubbleMessage variant="sent">
+          Hello, how has your day been? I hope you are doing well.
+        </ChatBubbleMessage>
+      </ChatBubble>
       <ChatBubble variant="received">
         <ChatBubbleMessage isLoading />
       </ChatBubble>
