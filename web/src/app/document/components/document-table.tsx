@@ -51,11 +51,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { documentSamples } from "@/constants/document";
 import { DocumentModel } from "@/models/document-model";
 import { FileUpload } from "@/components/ui/file-upload";
+import { Switch } from "@/components/ui/switch";
+import pdfLogo from "@/assets/pdf-file.png";
+import docxLogo from "@/assets/docx-file.png";
+import txtLogo from "@/assets/txt-file.png";
+import pptxLogo from "@/assets/pptx-file.png";
+import mdLogo from "@/assets/md-file.png";
+import Image, { StaticImageData } from "next/image";
 
 export const columns: ColumnDef<DocumentModel>[] = [
   {
@@ -79,6 +84,18 @@ export const columns: ColumnDef<DocumentModel>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
+  },
+  {
+    accessorKey: "active",
+    header: "Enable",
+    cell: ({ row }) => {
+      return (
+        <Switch
+          id="enable"
+          defaultChecked={row.getValue("active") ? true : false}
+        />
+      );
+    },
   },
   {
     accessorKey: "status",
@@ -125,7 +142,29 @@ export const columns: ColumnDef<DocumentModel>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("type")}</div>,
+    cell: ({ row }) => {
+      let imageLogo: StaticImageData = pdfLogo;
+      if (row.getValue("type") === "pdf") {
+        imageLogo = pdfLogo;
+      }
+      if (row.getValue("type") === "docx") {
+        imageLogo = docxLogo;
+      }
+      if (row.getValue("type") === "txt") {
+        imageLogo = txtLogo;
+      }
+      if (row.getValue("type") === "md") {
+        imageLogo = mdLogo;
+      }
+      if (row.getValue("type") === "pptx") {
+        imageLogo = pptxLogo;
+      }
+      return (
+        <div className="flex justify-center">
+          <Image src={imageLogo} alt="pdf-file" width={35} height={35} />
+        </div>
+      );
+    },
   },
   {
     accessorKey: "size",
@@ -140,7 +179,12 @@ export const columns: ColumnDef<DocumentModel>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("size")}</div>,
+    cell: ({ row }) => {
+      const fileSize = ((row.getValue("size") as number) / 1024 / 1024).toFixed(
+        2,
+      );
+      return <div className="capitalize">{fileSize} MB</div>;
+    },
   },
   {
     accessorKey: "version",

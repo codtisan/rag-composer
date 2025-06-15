@@ -28,7 +28,7 @@ export const IAMPolicies = {
 
 export type RoleModel = {
   id: string;
-  status: "Active" | "Inactive";
+  active: boolean;
   name: string;
   dashboard: DashboardPermission[] | [];
   analytics: DashboardPermission[] | [];

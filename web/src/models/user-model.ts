@@ -1,6 +1,6 @@
 export type UserModel = {
   id: string;
-  status: "Active" | "Inactive";
+  active: boolean;
   email: string;
   name: string;
   password: string;

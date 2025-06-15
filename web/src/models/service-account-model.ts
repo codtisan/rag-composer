@@ -1,6 +1,6 @@
 export type ServiceAccountModel = {
   id: string;
-  status: "Active" | "Inactive";
+  active: boolean;
   email: string;
   token: string;
   role: string;

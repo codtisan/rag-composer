@@ -41,8 +41,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { knowledgeBaseDataSample } from "@/constants/knowledge-base";
-import { statusToColor } from "@/utils/color";
-import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogClose,
@@ -55,6 +53,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { KnowledgeBaseModel } from "@/models/knowledge-base-model";
+import { Switch } from "@/components/ui/switch";
 
 export const columns: ColumnDef<KnowledgeBaseModel>[] = [
   {
@@ -80,19 +79,14 @@ export const columns: ColumnDef<KnowledgeBaseModel>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "active",
+    header: "Enable",
     cell: ({ row }) => {
-      const color = statusToColor(row.getValue("status"));
       return (
-        <div
-          className={cn(
-            "flex items-center justify-center capitalize rounded-2xl",
-            color,
-          )}
-        >
-          {row.getValue("status")}
-        </div>
+        <Switch
+          id="enable"
+          defaultChecked={row.getValue("active") ? true : false}
+        />
       );
     },
   },

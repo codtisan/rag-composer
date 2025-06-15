@@ -1,7 +1,7 @@
 export type KnowledgeBaseModel = {
   id: string;
   name: string;
-  status: "Active" | "Inactive";
+  active: boolean;
   description: string;
   createdAt: Date;
   updatedAt: Date;

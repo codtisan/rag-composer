@@ -57,8 +57,7 @@ import {
   IAMPolicies,
   RoleModel,
 } from "@/models/role-model";
-import { statusToColor } from "@/utils/color";
-import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
 
 export const columns: ColumnDef<RoleModel>[] = [
   {
@@ -84,19 +83,14 @@ export const columns: ColumnDef<RoleModel>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "active",
+    header: "Enable",
     cell: ({ row }) => {
-      const color = statusToColor(row.getValue("status"));
       return (
-        <div
-          className={cn(
-            "flex items-center justify-center capitalize rounded-2xl",
-            color,
-          )}
-        >
-          {row.getValue("status")}
-        </div>
+        <Switch
+          id="enable"
+          defaultChecked={row.getValue("active") ? true : false}
+        />
       );
     },
   },
