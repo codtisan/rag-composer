@@ -5,6 +5,7 @@ import {
   BookOpenText,
   ChartLine,
   DatabaseBackup,
+  Joystick,
   KeyRound,
   LayoutDashboard,
   Settings,
@@ -40,6 +41,11 @@ const FirstPageMenuItemList: MenuItem[] = [
     title: "Knowledge Base",
     icon: <BookOpenText />,
     link: "/knowledgebase",
+  },
+  {
+    title: "Playground",
+    icon: <Joystick />,
+    link: "/playground",
   },
   {
     title: "Identity and Access Management",
