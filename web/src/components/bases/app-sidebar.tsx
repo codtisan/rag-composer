@@ -7,7 +7,6 @@ import {
   DatabaseBackup,
   File,
   Joystick,
-  KeyRound,
   LayoutDashboard,
   Settings,
   Users,
@@ -53,11 +52,6 @@ const FirstPageMenuItemList: MenuItem[] = [
     title: "Playground",
     icon: <Joystick />,
     link: "/playground",
-  },
-  {
-    title: "API Key Manager",
-    icon: <KeyRound />,
-    link: "/apikey",
   },
   {
     title: "Identity and Access Management",

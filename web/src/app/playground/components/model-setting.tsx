@@ -11,7 +11,7 @@ import { Slider } from "@/components/ui/slider";
 
 export default function Modelsetting() {
   return (
-    <div className="h-full w-[20%] flex items-center justify-center shadow-sm border-r-1">
+    <div className="h-full w-[25%] flex items-center justify-center shadow-sm border-r-1">
       <div className="h-[95%] w-[90%] flex flex-col gap-5">
         <div className="text-center font-bold text-2xl">Model Setting</div>
         <div>
