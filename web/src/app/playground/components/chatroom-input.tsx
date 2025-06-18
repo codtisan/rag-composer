@@ -1,5 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Mic, Paperclip, Send } from "lucide-react";
 import { useState } from "react";
@@ -20,10 +22,11 @@ export default function ChatroomInput({ sendMessage }: ChatroomInputProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <div className="absolute left-3 bottom-1">
-          <Button variant="ghost">
+        <div className="absolute left-3 bottom-1 flex flex-row items-center gap-3 ml-2">
+          <Label className="flex justify-center items-center rounded-4xl w-[1rem] h-[1rem] hover:bg-gray-50">
             <Paperclip />
-          </Button>
+            <Input type="file" hidden />
+          </Label>
           <Button variant="ghost" className="rounded-3xl">
             <Mic />
           </Button>
