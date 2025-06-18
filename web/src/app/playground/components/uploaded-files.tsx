@@ -24,6 +24,7 @@ const UploadedFileMessage = ({ files }: UploadedFileMessageProps) => {
       return (
         <div key={index} className="w-max self-end">
           <Image
+            className="rounded-2xl"
             src={previewUrl}
             alt="uploaded-image"
             width={300}
