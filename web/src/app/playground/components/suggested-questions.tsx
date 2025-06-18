@@ -15,7 +15,7 @@ const suggestedQuestions = [
 
 export default function SuggestedQuestionList() {
   return (
-    <div className="min-w-[80%] flex flex-col gap-2">
+    <div className="w-full flex flex-col gap-2">
       {suggestedQuestions.map((question: SuggestedQuestion) => {
         return <Button key={question.title}>{question.title}</Button>;
       })}

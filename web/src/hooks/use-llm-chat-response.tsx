@@ -16,7 +16,6 @@ const UseLLMChatResponse = ({
   setLLMStatus,
 }: UseLLMChatProps) => {
   const ws = useRef<WebSocket>(new WebSocket(socketUrl));
-  console.log(messages);
 
   useEffect(() => {
     ws.current = new WebSocket(socketUrl);
@@ -74,6 +73,7 @@ const UseLLMChatResponse = ({
       };
       setMessages([...messages, userMessage]);
       ws.current.send(input);
+      setLLMStatus("loading");
       setInput("");
     }
   };

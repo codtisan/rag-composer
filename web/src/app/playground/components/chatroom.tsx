@@ -9,7 +9,7 @@ export default function Chatroom() {
   const [messages, setMessages] = useState<ChatMessageModel[] | []>([]);
   const [llmStatus, setLLMStatus] = useState<
     "loading" | "streaming" | "finished"
-  >("loading");
+  >("finished");
 
   const { sendMessage } = UseLLMChatResponse({
     messages: messages,

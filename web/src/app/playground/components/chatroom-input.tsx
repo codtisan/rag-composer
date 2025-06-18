@@ -21,6 +21,11 @@ export default function ChatroomInput({ sendMessage }: ChatroomInputProps) {
           placeholder="Type your message here"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && input !== "") {
+              sendMessage(input, setInput);
+            }
+          }}
         />
         <div className="absolute left-3 bottom-1 flex flex-row items-center gap-3 ml-2">
           <Label className="flex justify-center items-center rounded-4xl w-[1rem] h-[1rem] hover:bg-gray-50">
