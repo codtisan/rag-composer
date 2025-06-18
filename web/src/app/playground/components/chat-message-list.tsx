@@ -7,6 +7,7 @@ import { ChatMessageList } from "@/components/ui/chat/chat-message-list";
 import { ChatMessageModel } from "@/models/chat-message-model";
 import UserFeedbackList from "./user-feedback-list";
 import SuggestedQuestionList from "./suggested-questions";
+import UploadedFileMessage from "./uploaded-files";
 import Markdown from "react-markdown";
 import { MarkdownCodeBlock } from "./markdown-blocks/markdown-code-block";
 import {
@@ -21,21 +22,26 @@ import {
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { useRef } from "react";
+import useFileStore from "@/store/use-file-upload-store";
 
 export type ChatroomMessageListProps = {
   messages: ChatMessageModel[] | [];
   llmStatus: "loading" | "streaming" | "finished";
+  sendMessage: (input: string, setInput: (value: string) => void) => void;
 };
 
 export default function ChatroomMessageList({
   llmStatus,
   messages,
+  sendMessage,
 }: ChatroomMessageListProps) {
   const contentRef = useRef<HTMLDivElement>(null);
-  // messages = MarkdownSample;
+  const { files } = useFileStore();
+
   return (
     <ChatMessageList>
-      {messages.map((message: ChatMessageModel) => {
+      {files.length > 0 && <UploadedFileMessage files={files} />}
+      {messages.map((message: ChatMessageModel, index: number) => {
         return (
           <div className="flex flex-col" key={message.id}>
             <ChatBubble
@@ -82,15 +88,19 @@ export default function ChatroomMessageList({
                   {message.content}
                 </Markdown>
               </ChatBubbleMessage>
-              {message.role === "assistant" && llmStatus === "finished" && (
-                <UserFeedbackList
-                  message={message.content}
-                  contentRef={contentRef}
-                />
-              )}
-              {message.role === "assistant" && llmStatus === "finished" && (
-                <SuggestedQuestionList />
-              )}
+              {message.role === "assistant" &&
+                llmStatus === "finished" &&
+                index === messages.length - 1 && (
+                  <UserFeedbackList
+                    message={message.content}
+                    contentRef={contentRef}
+                  />
+                )}
+              {message.role === "assistant" &&
+                llmStatus === "finished" &&
+                index === messages.length - 1 && (
+                  <SuggestedQuestionList sendMessage={sendMessage} />
+                )}
             </ChatBubble>
           </div>
         );

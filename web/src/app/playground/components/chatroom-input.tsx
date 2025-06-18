@@ -3,15 +3,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { ChatMessageModel } from "@/models/chat-message-model";
+import useFileStore from "@/store/use-file-upload-store";
 import { Mic, Paperclip, Send } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export type ChatroomInputProps = {
   sendMessage: (input: string, setInput: (value: string) => void) => void;
+  setMessages: (value: ChatMessageModel[]) => void;
 };
 
-export default function ChatroomInput({ sendMessage }: ChatroomInputProps) {
+const ChatroomInput = ({ sendMessage }: ChatroomInputProps) => {
   const [input, setInput] = useState("");
+  const { setFiles } = useFileStore();
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const uploadedFiles = e.target.files;
+    if (uploadedFiles) {
+      setFiles([...Array.from(uploadedFiles)]);
+    }
+  };
 
   return (
     <div className="size-full flex flex-row items-center gap-5">
@@ -30,7 +41,7 @@ export default function ChatroomInput({ sendMessage }: ChatroomInputProps) {
         <div className="absolute left-3 bottom-1 flex flex-row items-center gap-3 ml-2">
           <Label className="flex justify-center items-center rounded-4xl w-[1rem] h-[1rem] hover:bg-gray-50">
             <Paperclip />
-            <Input type="file" hidden />
+            <Input type="file" hidden onChange={handleFileUpload} />
           </Label>
           <Button variant="ghost" className="rounded-3xl">
             <Mic />
@@ -45,4 +56,6 @@ export default function ChatroomInput({ sendMessage }: ChatroomInputProps) {
       </Button>
     </div>
   );
-}
+};
+
+export default React.memo(ChatroomInput);

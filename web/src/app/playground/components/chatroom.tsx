@@ -21,10 +21,14 @@ export default function Chatroom() {
   return (
     <div className="size-full">
       <div className="h-[85%]">
-        <ChatroomMessageList messages={messages} llmStatus={llmStatus} />
+        <ChatroomMessageList
+          messages={messages}
+          llmStatus={llmStatus}
+          sendMessage={sendMessage}
+        />
       </div>
       <div className="h-[15%]">
-        <ChatroomInput sendMessage={sendMessage} />
+        <ChatroomInput sendMessage={sendMessage} setMessages={setMessages} />
       </div>
     </div>
   );

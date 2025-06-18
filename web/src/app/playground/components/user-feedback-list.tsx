@@ -13,6 +13,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { RefObject, useState } from "react";
+import { cn } from "@/lib/utils";
 
 type UserFeedbackListProps = {
   message: string;
@@ -63,12 +64,18 @@ export default function UserFeedbackList({
     },
     { icon: <RefreshCcw />, type: "Regenerate" },
     {
-      icon: <ThumbsUp fill={isLike ? "black" : "white"} />,
+      icon: (
+        <ThumbsUp className={cn(isLike ? "fill-black dark:fill-white" : "")} />
+      ),
       type: "Like",
       action: likeMessage,
     },
     {
-      icon: <ThumbsDown fill={isDislike ? "black" : "white"} />,
+      icon: (
+        <ThumbsDown
+          className={cn(isDislike ? "fill-black dark:fill-white" : "")}
+        />
+      ),
       type: "Dislike",
       action: dislikeMessage,
     },
