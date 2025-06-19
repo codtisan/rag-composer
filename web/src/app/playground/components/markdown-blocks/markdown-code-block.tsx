@@ -78,7 +78,7 @@ export const MarkdownThinkBlock = ({ children }: MarkdownThinkBlockProps) => {
       >
         Thinking
       </Button>
-      {isCollapse && (
+      {!isCollapse && (
         <div className="w-full border-l-4 border-l-gray-500">
           <p className="max-w-full pl-3 whitespace-pre-wrap">{children}</p>
         </div>
