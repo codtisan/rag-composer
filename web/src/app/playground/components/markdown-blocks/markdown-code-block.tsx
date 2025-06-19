@@ -1,5 +1,7 @@
+import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/ui/code-block";
 import ReactECharts from "echarts-for-react";
+import React, { useState } from "react";
 
 const LanguageMap = new Map<string, string>([
   ["python", "py"],
@@ -7,12 +9,20 @@ const LanguageMap = new Map<string, string>([
   ["typescript", "ts"],
 ]);
 
-export const MarkdownCodeBlock = ({ ...props }) => {
+const MarkdownCodeBlock = ({ ...props }) => {
   const { children, className } = props;
   const match = /language-(\w+)/.exec(className || "");
 
   if (!match) {
     return;
+  }
+
+  if (match[1] === "think") {
+    return (
+      <MarkdownThinkBlock>
+        {String(children).replace(/\n$/, "")}
+      </MarkdownThinkBlock>
+    );
   }
 
   if (match[1] === "echart") {
@@ -34,6 +44,8 @@ export const MarkdownCodeBlock = ({ ...props }) => {
   );
 };
 
+export default React.memo(MarkdownCodeBlock);
+
 type MarkdownChartBlockProps = {
   children: string;
 };
@@ -48,6 +60,29 @@ export const MarkdownChartBlock = ({ children }: MarkdownChartBlockProps) => {
   return (
     <div className="max-w-full">
       <ReactECharts option={chartOption} />
+    </div>
+  );
+};
+
+type MarkdownThinkBlockProps = {
+  children: string;
+};
+
+export const MarkdownThinkBlock = ({ children }: MarkdownThinkBlockProps) => {
+  const [isCollapse, setIsCollapse] = useState(false);
+  return (
+    <div className="w-full flex flex-col gap-2">
+      <Button
+        className="w-[40%] h-8 bg-green-300 rounded-md justify-center flex items-center text-black hover:text-white"
+        onClick={() => setIsCollapse(isCollapse ? false : true)}
+      >
+        Thinking
+      </Button>
+      {isCollapse && (
+        <div className="w-full border-l-4 border-l-gray-500">
+          <p className="max-w-full pl-3 whitespace-pre-wrap">{children}</p>
+        </div>
+      )}
     </div>
   );
 };

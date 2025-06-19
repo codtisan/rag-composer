@@ -9,7 +9,6 @@ import UserFeedbackList from "./user-feedback-list";
 import SuggestedQuestionList from "./suggested-questions";
 import UploadedFileMessage from "./uploaded-files";
 import Markdown from "react-markdown";
-import { MarkdownCodeBlock } from "./markdown-blocks/markdown-code-block";
 import {
   Table,
   TableBody,
@@ -23,6 +22,8 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { useRef } from "react";
 import useFileStore from "@/store/use-file-upload-store";
+import markdownCodeBlock from "./markdown-blocks/markdown-code-block";
+import { cn } from "@/lib/utils";
 
 export type ChatroomMessageListProps = {
   messages: ChatMessageModel[] | [];
@@ -42,13 +43,20 @@ export default function ChatroomMessageList({
     <ChatMessageList>
       {files.length > 0 && <UploadedFileMessage files={files} />}
       {messages.map((message: ChatMessageModel, index: number) => {
+        message.content = message.content.replace("<think>", "\`\`\`think");
+        message.content = message.content.replace("</think>", "\`\`\`");
+
         return (
           <div className="flex flex-col" key={message.id}>
             <ChatBubble
-              className="flex flex-col items-center"
+              className={cn(
+                "flex flex-col items-center",
+                message.role === "assistant" ? "w-[60%]" : "",
+              )}
               variant={message.role === "user" ? "sent" : "received"}
             >
               <ChatBubbleMessage
+                className={cn("", message.role === "assistant" ? "w-full" : "")}
                 ref={contentRef}
                 variant={message.role === "user" ? "sent" : "received"}
               >
@@ -82,7 +90,7 @@ export default function ChatroomMessageList({
                     td: ({ children, ...props }) => {
                       return <TableCell {...props}>{children}</TableCell>;
                     },
-                    code: MarkdownCodeBlock,
+                    code: markdownCodeBlock,
                   }}
                 >
                   {message.content}
