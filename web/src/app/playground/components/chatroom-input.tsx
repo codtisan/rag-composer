@@ -4,23 +4,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ChatMessageModel } from "@/models/chat-message-model";
-import useFileStore from "@/store/use-file-upload-store";
 import { Mic, Paperclip, Send } from "lucide-react";
 import React, { useState } from "react";
 
 export type ChatroomInputProps = {
-  sendMessage: (input: string, setInput: (value: string) => void) => void;
+  sendMessage: (
+    input: string,
+    setInput: (value: string) => void,
+    files: File[] | [],
+    setFiles?: (value: File[] | []) => void,
+  ) => void;
   setMessages: (value: ChatMessageModel[]) => void;
 };
 
 const ChatroomInput = ({ sendMessage }: ChatroomInputProps) => {
   const [input, setInput] = useState("");
-  const { setFiles } = useFileStore();
+  const [files, setFiles] = useState<File[] | []>([]);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const uploadedFiles = e.target.files;
     if (uploadedFiles) {
-      setFiles([...Array.from(uploadedFiles)]);
+      setFiles((prevFiles) => [...prevFiles, ...Array.from(uploadedFiles)]);
     }
   };
 
@@ -34,7 +38,7 @@ const ChatroomInput = ({ sendMessage }: ChatroomInputProps) => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter" && input !== "") {
-              sendMessage(input, setInput);
+              sendMessage(input, setInput, files, setFiles);
             }
           }}
         />
@@ -50,7 +54,7 @@ const ChatroomInput = ({ sendMessage }: ChatroomInputProps) => {
       </div>
       <Button
         className="h-[70%] w-[6%] rounded-4xl"
-        onClick={() => sendMessage(input, setInput)}
+        onClick={() => sendMessage(input, setInput, files, setFiles)}
       >
         <Send />
       </Button>

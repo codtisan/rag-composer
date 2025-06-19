@@ -63,7 +63,12 @@ const UseLLMChatResponse = ({
     };
   }, []);
 
-  const sendMessage = (input: string, setInput: (value: string) => void) => {
+  const sendMessage = (
+    input: string,
+    setInput: (value: string) => void,
+    files: File[] | [],
+    setFiles?: (value: File[] | []) => void,
+  ) => {
     if (input.trim()) {
       const userMessage: ChatMessageModel = {
         id: uuidv4(),
@@ -71,10 +76,28 @@ const UseLLMChatResponse = ({
         createdAt: new Date(),
         role: "user",
       };
-      setMessages([...messages, userMessage]);
+
+      if (files.length !== 0) {
+        const newMediaMessages: ChatMessageModel[] = files.map((file) => ({
+          id: uuidv4(),
+          role: "user",
+          content: "",
+          createdAt: new Date(),
+          media: {
+            name: file.name,
+            file: file,
+          },
+        }));
+        setMessages([...messages, ...newMediaMessages, userMessage]);
+      } else {
+        setMessages([...messages, userMessage]);
+      }
       ws.current.send(input);
       setLLMStatus("loading");
       setInput("");
+      if (setFiles) {
+        setFiles([]);
+      }
     }
   };
 

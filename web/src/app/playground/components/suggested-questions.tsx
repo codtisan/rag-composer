@@ -15,7 +15,11 @@ const suggestedQuestions = [
 ];
 
 export type SuggestedQuestionListProps = {
-  sendMessage: (input: string, setInput: (value: string) => void) => void;
+  sendMessage: (
+    input: string,
+    setInput: (value: string) => void,
+    files: File[] | [],
+  ) => void;
 };
 
 const SuggestedQuestionList = ({ sendMessage }: SuggestedQuestionListProps) => {
@@ -28,7 +32,7 @@ const SuggestedQuestionList = ({ sendMessage }: SuggestedQuestionListProps) => {
           <Button
             key={question.title}
             onClick={() => {
-              sendMessage(question.title, setInput);
+              sendMessage(question.title, setInput, []);
             }}
           >
             {question.title}

@@ -48,12 +48,10 @@ export default function UserFeedbackList({
 
   const likeMessage = async () => {
     setIsLike(true);
-    setTimeout(() => setIsLike(false), 2000);
   };
 
   const dislikeMessage = async () => {
     setIsDislike(true);
-    setTimeout(() => setIsDislike(false), 2000);
   };
 
   const actionIcons = [
