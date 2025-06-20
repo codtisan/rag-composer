@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/ui/code-block";
+import { Separator } from "@/components/ui/separator";
 import ReactECharts from "echarts-for-react";
+import { Download } from "lucide-react";
 import React, { useState } from "react";
 
 const LanguageMap = new Map<string, string>([
@@ -58,7 +60,13 @@ export const MarkdownChartBlock = ({ children }: MarkdownChartBlockProps) => {
     return;
   }
   return (
-    <div className="max-w-full">
+    <div className="max-w-full bg-white rounded-2xl">
+      <div className="flex justify-end">
+        <Button variant="ghost">
+          <Download />
+        </Button>
+      </div>
+      <Separator />
       <ReactECharts option={chartOption} />
     </div>
   );
