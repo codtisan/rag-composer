@@ -30,6 +30,7 @@ const ChatroomInput = ({ sendMessage }: ChatroomInputProps) => {
     const uploadedFiles = e.target.files;
     if (uploadedFiles) {
       setFiles((prevFiles) => [...prevFiles, ...Array.from(uploadedFiles)]);
+      e.target.value = "";
     }
   };
 

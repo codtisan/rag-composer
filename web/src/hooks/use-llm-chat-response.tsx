@@ -1,4 +1,5 @@
 import { ChatMessageModel } from "@/models/chat-message-model";
+import { fileToBase64 } from "@/utils/file";
 import { useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -63,7 +64,7 @@ const UseLLMChatResponse = ({
     };
   }, []);
 
-  const sendMessage = (
+  const sendMessage = async (
     input: string,
     setInput: (value: string) => void,
     files: File[] | [],
@@ -89,15 +90,24 @@ const UseLLMChatResponse = ({
           },
         }));
         setMessages([...messages, ...newMediaMessages, userMessage]);
+        const fileBase64 = await fileToBase64(files[0]);
+        const payload = {
+          input: input,
+          file: fileBase64,
+        };
+        ws.current.send(JSON.stringify(payload));
+        if (setFiles) {
+          setFiles([]);
+        }
       } else {
+        const payload = {
+          input: input,
+        };
         setMessages([...messages, userMessage]);
+        ws.current.send(JSON.stringify(payload));
       }
-      ws.current.send(input);
       setLLMStatus("loading");
       setInput("");
-      if (setFiles) {
-        setFiles([]);
-      }
     }
   };
 
