@@ -6,6 +6,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { ChatMessageModel } from "@/models/chat-message-model";
 import { Mic, Paperclip, Send } from "lucide-react";
 import React, { useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export type ChatroomInputProps = {
   sendMessage: (
@@ -43,13 +48,27 @@ const ChatroomInput = ({ sendMessage }: ChatroomInputProps) => {
           }}
         />
         <div className="absolute left-3 bottom-1 flex flex-row items-center gap-3 ml-2">
-          <Label className="flex justify-center items-center rounded-4xl w-[1rem] h-[1rem] hover:bg-gray-50">
-            <Paperclip />
-            <Input type="file" hidden onChange={handleFileUpload} />
-          </Label>
-          <Button variant="ghost" className="rounded-3xl">
-            <Mic />
-          </Button>
+          <Tooltip key="file">
+            <TooltipTrigger asChild>
+              <Label className="flex justify-center items-center rounded-4xl w-[2.5rem] h-[2.5rem] hover:bg-gray-100">
+                <Paperclip className="w-[1rem] h-[1rem]" />
+                <Input type="file" hidden onChange={handleFileUpload} />
+              </Label>
+            </TooltipTrigger>
+            <TooltipContent side="top">
+              <p>Upload File</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip key="mic">
+            <TooltipTrigger asChild>
+              <Button variant="ghost" className="rounded-3xl">
+                <Mic />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="top">
+              <p>Microphone</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
       <Button
