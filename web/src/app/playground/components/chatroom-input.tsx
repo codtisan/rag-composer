@@ -11,6 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import UploadedFileMessage from "./uploaded-files";
 
 export type ChatroomInputProps = {
   sendMessage: (
@@ -70,6 +71,29 @@ const ChatroomInput = ({ sendMessage }: ChatroomInputProps) => {
               <p>Microphone</p>
             </TooltipContent>
           </Tooltip>
+          <div className="flex flex-row gap-5 items-center">
+            {files.length > 0 &&
+              files.map((file: File) => {
+                return (
+                  <div key={file.name}>
+                    <div>
+                      <UploadedFileMessage size={60} file={file} />
+                    </div>
+                    <button
+                      className="absolute ml-12  top-[-0.5rem] size-[1.5rem] text-white bg-gray-800 rounded-full"
+                      onClick={() => {
+                        const newFiles = files.filter(
+                          (f: File) => f.name !== file.name,
+                        );
+                        setFiles(newFiles);
+                      }}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                );
+              })}
+          </div>
         </div>
       </div>
       <Button

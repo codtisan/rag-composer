@@ -28,7 +28,7 @@ const UploadedFileMessage = ({
       <div className="w-max self-end">
         <Zoom>
           <Image
-            className="rounded-2xl"
+            className="rounded-lg"
             src={previewUrl}
             alt="uploaded-image"
             width={size}
