@@ -1,12 +1,18 @@
 import pdfLogo from "@/assets/pdf-file.png";
 import Image from "next/image";
 import React, { useState } from "react";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 type UploadedFileMessageProps = {
   file: File;
+  size?: number;
 };
 
-const UploadedFileMessage = ({ file }: UploadedFileMessageProps) => {
+const UploadedFileMessage = ({
+  file,
+  size = 300,
+}: UploadedFileMessageProps) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   if (file.type.startsWith("image/")) {
@@ -20,13 +26,15 @@ const UploadedFileMessage = ({ file }: UploadedFileMessageProps) => {
   if (previewUrl && file.type.startsWith("image/")) {
     return (
       <div className="w-max self-end">
-        <Image
-          className="rounded-2xl"
-          src={previewUrl}
-          alt="uploaded-image"
-          width={300}
-          height={300}
-        />
+        <Zoom>
+          <Image
+            className="rounded-2xl"
+            src={previewUrl}
+            alt="uploaded-image"
+            width={size}
+            height={size}
+          />
+        </Zoom>
       </div>
     );
   }

@@ -8,6 +8,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
+import { llmModelSamples } from "@/constants/llm-models";
+import { LLMModelsModel } from "@/models/llm-models-model";
 
 export default function Modelsetting() {
   return (
@@ -23,9 +25,13 @@ export default function Modelsetting() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center">
-              <DropdownMenuItem>Qwen3</DropdownMenuItem>
-              <DropdownMenuItem>Llama4</DropdownMenuItem>
-              <DropdownMenuItem>Claude</DropdownMenuItem>
+              {llmModelSamples.map((llmModel: LLMModelsModel) => {
+                return (
+                  <DropdownMenuItem key={llmModel.id}>
+                    {llmModel.modelName}
+                  </DropdownMenuItem>
+                );
+              })}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
