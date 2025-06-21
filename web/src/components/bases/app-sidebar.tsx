@@ -8,6 +8,9 @@ import {
   File,
   Joystick,
   LayoutDashboard,
+  MessageCircle,
+  Network,
+  Search,
   Settings,
   Users,
 } from "lucide-react";
@@ -49,6 +52,16 @@ const FirstPageMenuItemList: MenuItem[] = [
     link: "/document",
   },
   {
+    title: "Knowledge Graph",
+    icon: <Network />,
+    link: "/knowledge-graph",
+  },
+  {
+    title: "Conversation history",
+    icon: <MessageCircle />,
+    link: "/conversation-history",
+  },
+  {
     title: "Playground",
     icon: <Joystick />,
     link: "/playground",
@@ -58,14 +71,19 @@ const FirstPageMenuItemList: MenuItem[] = [
     icon: <Users />,
     link: "/iam",
   },
-];
-
-const SecondPageMenuItemList: MenuItem[] = [
+  {
+    title: "Logs",
+    icon: <Search />,
+    link: "/logs",
+  },
   {
     title: "Backup and restore",
     icon: <DatabaseBackup />,
     link: "/backup",
   },
+];
+
+const SecondPageMenuItemList: MenuItem[] = [
   {
     title: "Setting",
     icon: <Settings />,
