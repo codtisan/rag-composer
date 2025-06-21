@@ -10,6 +10,7 @@ import {
   LayoutDashboard,
   MessageCircle,
   Network,
+  Package,
   Search,
   Settings,
   Users,
@@ -44,12 +45,17 @@ const FirstPageMenuItemList: MenuItem[] = [
   {
     title: "Knowledge Base",
     icon: <BookOpenText />,
-    link: "/knowledgebase",
+    link: "/knowledge-base",
   },
   {
     title: "Document Manager",
     icon: <File />,
     link: "/document",
+  },
+  {
+    title: "LLM Models",
+    icon: <Package />,
+    link: "/llm-models",
   },
   {
     title: "Knowledge Graph",
