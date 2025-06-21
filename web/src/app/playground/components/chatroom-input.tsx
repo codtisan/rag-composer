@@ -12,6 +12,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import UploadedFileMessage from "./uploaded-files";
+import { cn } from "@/lib/utils";
 
 export type ChatroomInputProps = {
   sendMessage: (
@@ -74,13 +75,16 @@ const ChatroomInput = ({ sendMessage }: ChatroomInputProps) => {
           <div className="flex flex-row gap-5 items-center">
             {files.length > 0 &&
               files.map((file: File) => {
+                const isDocument = !file.type.startsWith("image/");
                 return (
                   <div key={file.name}>
                     <div>
                       <UploadedFileMessage size={60} file={file} />
                     </div>
                     <button
-                      className="absolute ml-12  top-[-0.5rem] size-[1.5rem] text-white bg-gray-800 rounded-full"
+                      className={cn(
+                        `absolute ml-${isDocument ? "58" : "12"} top-[-0.5rem] size-[1.5rem] text-white bg-gray-800 rounded-full`,
+                      )}
                       onClick={() => {
                         const newFiles = files.filter(
                           (f: File) => f.name !== file.name,
