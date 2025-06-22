@@ -93,6 +93,27 @@ export default function ChatroomMessageList({
                     remarkPlugins={[remarkGfm]}
                     remarkRehypeOptions={{ passThrough: ["link"] }}
                     components={{
+                      h1: ({ children, ...props }) => {
+                        return (
+                          <h1 {...props} className="font-bold text-3xl">
+                            {children}
+                          </h1>
+                        );
+                      },
+                      h2: ({ children, ...props }) => {
+                        return (
+                          <h2 {...props} className="font-bold text-2xl">
+                            {children}
+                          </h2>
+                        );
+                      },
+                      h3: ({ children, ...props }) => {
+                        return (
+                          <h3 {...props} className="font-bold text-xl">
+                            {children}
+                          </h3>
+                        );
+                      },
                       table: ({ children, ...props }) => {
                         return (
                           <Table {...props}>

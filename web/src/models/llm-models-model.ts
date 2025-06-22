@@ -7,6 +7,7 @@ export type LLMModelsModel = {
   totalCost: number;
   context: number;
   input: ("text" | "image")[];
+  apiKey: string;
   createdAt: Date;
   updatedAt: Date;
 };

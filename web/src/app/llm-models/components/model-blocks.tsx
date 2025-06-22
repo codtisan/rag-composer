@@ -61,6 +61,12 @@ const ModelBlocks = ({ llmModel }: ModelBlocksProps) => {
               })}
             </div>
           </div>
+          <div className="grid gap-0 grid-cols-2">
+            <Label htmlFor="name-1">API Key</Label>
+            <div>
+              {llmModel.apiKey.slice(0, 5)}******{llmModel.apiKey.slice(-5)}
+            </div>
+          </div>
         </div>
         <DialogFooter>
           <DialogClose asChild>

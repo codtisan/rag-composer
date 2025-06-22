@@ -1,4 +1,12 @@
-import { Gemini, OpenAI, DeepSeek, Meta, Qwen } from "@lobehub/icons";
+import {
+  Gemini,
+  OpenAI,
+  DeepSeek,
+  Meta,
+  Qwen,
+  Anthropic,
+  Grok,
+} from "@lobehub/icons";
 
 type ModelIconProps = {
   modelName: string;
@@ -24,6 +32,10 @@ const ModelIcon = ({ modelName }: ModelIconProps) => {
       return <Qwen.Color size={64} className="size-[50%]" />;
     case "Llama-3.1":
       return <Meta.Color size={64} className="size-[50%]" />;
+    case "Claude":
+      return <Anthropic size={64} className="size-[50%]" />;
+    case "Grok":
+      return <Grok size={64} className="size-[50%]" />;
     case "GPT-4o":
       return <OpenAI size={64} className="size-[50%]" />;
     default:

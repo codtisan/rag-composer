@@ -2,7 +2,13 @@ import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/ui/code-block";
 import { Separator } from "@/components/ui/separator";
 import ReactECharts from "echarts-for-react";
-import { Download } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Download, Image, Sheet } from "lucide-react";
 import React, { useState } from "react";
 
 const LanguageMap = new Map<string, string>([
@@ -62,9 +68,23 @@ export const MarkdownChartBlock = ({ children }: MarkdownChartBlockProps) => {
   return (
     <div className="max-w-full bg-white rounded-2xl">
       <div className="flex justify-end">
-        <Button variant="ghost">
-          <Download />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost">
+              <Download />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem>
+              <Image />
+              Export as png
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Sheet />
+              Export as csv
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <Separator />
       <ReactECharts option={chartOption} />
