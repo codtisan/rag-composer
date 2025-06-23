@@ -3,6 +3,7 @@ import {
   ArrowBigLeft,
   ArrowBigRight,
   BookOpenText,
+  Bot,
   ChartLine,
   DatabaseBackup,
   File,
@@ -41,6 +42,11 @@ const FirstPageMenuItemList: MenuItem[] = [
     title: "Analytics",
     icon: <ChartLine />,
     link: "/analytics",
+  },
+  {
+    title: "Agent",
+    icon: <Bot />,
+    link: "/agent",
   },
   {
     title: "Knowledge Base",
