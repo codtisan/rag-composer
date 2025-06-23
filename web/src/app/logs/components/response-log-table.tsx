@@ -131,9 +131,7 @@ export const columns: ColumnDef<ResponseLogModel>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("latency")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("latency")} ms</div>,
   },
   {
     accessorKey: "createdAt",

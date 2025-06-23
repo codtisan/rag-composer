@@ -127,9 +127,7 @@ export const columns: ColumnDef<TransactionLogModel>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("latency")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("latency")} ms</div>,
   },
   {
     accessorKey: "action",

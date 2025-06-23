@@ -7,6 +7,7 @@ import {
   ChartLine,
   DatabaseBackup,
   File,
+  Gauge,
   Joystick,
   LayoutDashboard,
   MessageCircle,
@@ -87,6 +88,11 @@ const FirstPageMenuItemList: MenuItem[] = [
     title: "Logs",
     icon: <Search />,
     link: "/logs",
+  },
+  {
+    title: "Metrics",
+    icon: <Gauge />,
+    link: "/metrics",
   },
   {
     title: "Backup and restore",
