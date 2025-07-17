@@ -1,27 +1,14 @@
 version: 2.1
 
-orbs:
-  go: circleci/go@1.7.3
-
 jobs:
-  build_and_test: # this can be any name you choose
-    executor:
-      name: go/default # Use the default executor from the orb
-      tag: "1.19.2" # Specify a version tag
+  hello-job:
+    docker:
+      - image: cimg/node:17.2.0 # the primary container, where your job's commands are run
     steps:
-      - checkout # checkout source code
-      - go/load-cache # Load cached Go modules.
-      - go/mod-download # Run 'go mod download'.
-      - go/save-cache # Save Go modules to cache.
-      - go/test: # Runs 'go test ./...' but includes extensive parameterization for finer tuning.
-          covermode: atomic
-          failfast: true
-          race: true
-      - persist_to_workspace:
-          root: ~/project
-          paths: .
+      - checkout # check out the code in the project directory
+      - run: echo "hello world" # run the `echo` command
 
 workflows:
-  test_and_build:
+  my-workflow:
     jobs:
-      - build_and_test
+      - hello-job
