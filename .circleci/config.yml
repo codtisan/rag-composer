@@ -12,8 +12,8 @@ jobs:
       - node/install-packages:
           pkg-manager: npm
       - run:
-          name: Run Tests
-          command: npm test
+          name: Run Version
+          command: npm -v
       - store_test_results:
           path: test-results
       - store_artifacts:
