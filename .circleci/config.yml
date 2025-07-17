@@ -9,15 +9,15 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
-      - run:
-          name: Run Version
-          command: npm -v
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: coverage
+      # - node/install-packages:
+      #     pkg-manager: npm
+      # - run:
+      #     name: Run Version
+      #     command: npm -v
+      # - store_test_results:
+      #     path: test-results
+      # - store_artifacts:
+      #     path: coverage
 
 workflows:
   test_and_build:
