@@ -1,17 +1,13 @@
 version: 2.1
 
 jobs:
-  hello-job:
+  deploy:
     docker:
-      - image: cimg/node:17.2.0 # the primary container, where your job's commands are run
+      - image: arvindr226/alpine-ssh
     steps:
-      - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - run: ssh -oStrictHostKeyChecking=no -v $USER@$DNS "ls"
 
 workflows:
-  my-workflow:
+  deploy-to-ec2:
     jobs:
-      - hello-job:
-          filters:
-            branches:
-              only: release/dev
+      - deploy
