@@ -1,23 +1,19 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.0.2
+  go: circleci/go@1.7.3
 
 jobs:
   test:
     docker:
-      - image: cimg/node:18.16
+      - image: cimg/go:1.21
     steps:
       - checkout
-      # - node/install-packages:
-      #     pkg-manager: npm
-      # - run:
-      #     name: Run Version
-      #     command: npm -v
-      # - store_test_results:
-      #     path: test-results
-      # - store_artifacts:
-      #     path: coverage
+      - go/install-go:
+          version: 1.21
+      - run:
+          name: Install Dependencies
+          command: go run main.go
 
 workflows:
   test_and_build:
